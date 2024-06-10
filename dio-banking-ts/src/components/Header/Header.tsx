@@ -1,9 +1,7 @@
-import "./Header.css";
-
 export const Header = () => {
   return (
-    <header>
-      <h1>Dio Banking</h1>
-    </header>
+    <div className="bg-zinc-800 sticky top-0 w-full p-6">
+      <h1 className="text-white text-center text-3xl">DIO Banking</h1>
+    </div>
   );
 };
