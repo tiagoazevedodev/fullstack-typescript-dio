@@ -5,14 +5,7 @@ import { Header } from "../Header/Header";
 
 export const LoginCard = () => {
   const [login, setLogin] = useState<string>("");
-  const handleLoginChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLogin(event.target.value);
-  };
-  
   const [password, setPassword] = useState<string>("");
-  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
-  };
 
   const handleSubmit = () => {
     alert(`Login: ${login} Password: ${password}`);
@@ -27,12 +20,12 @@ export const LoginCard = () => {
         </Center>
         <Input
           className="text-gray-300"
-          onChange={handleLoginChange}
+          onChange={(e) => setLogin(e.target.value)}
           placeholder="Login"
         />
         <Input
           className="text-gray-300"
-          onChange={handlePasswordChange}
+          onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
           type="password"
         />
