@@ -1,8 +1,9 @@
 import { Button } from "@chakra-ui/react";
+import { MouseEventHandler } from "react";
 
 interface SubmitButtonProps {
   children: string;
-  onClick: () => void;
+  onClick: MouseEventHandler;
 }
 
 
