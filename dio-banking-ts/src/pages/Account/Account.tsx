@@ -1,18 +1,48 @@
-import { SimpleGrid, Center } from "@chakra-ui/react"
+import { SimpleGrid, Center, Spinner } from "@chakra-ui/react"
+import { useParams, useNavigate } from "react-router-dom"
 import { InfoCard } from "../../components/InfoCard/InfoCard"
 import { Header } from "../../components/Header/Header"
+import { useEffect, useState } from "react"
+import { api } from "../../api"
+
+
+interface UserData {
+  login: string;
+  password: string;
+  name: string;
+  balance: number;
+  id: string;
+}
+
 
 export const Account = () => {
-  
-  
-  return(
+  const [userData, setUserData] = useState<null | UserData>();
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const getData = async () => {
+      const data: any | UserData = await api;
+      console.log(data);
+      setUserData(data);
+    }
+    getData()
+  }, []);
+
+  if (userData && userData.id !== id) {
+    navigate("/");
+  }
+
+  return (
     <div className="bg-zinc-900 flex flex-col h-screen">
-      <Header/>
       <Center>
-        <SimpleGrid className="w-2/4" columns={2} spacing={8} paddingTop={16}>
-          <InfoCard title="Saldo" value="R$ 1.000,00" />
-          <InfoCard title="Fatura Cartão de Crédito" value="R$ 2.000,00" />
-        </SimpleGrid>
+          {userData === null || userData?.name === undefined ? <Spinner marginTop={16} className="text-zinc-200 text-center" size="xl" /> :
+            <SimpleGrid className="w-2/4" columns={2} spacing={8} paddingTop={16}>
+                <InfoCard title="Informação da conta" value={userData?.name} />
+                <InfoCard title="Saldo da Conta" value={`R$ ${userData?.balance.toFixed(2)}`.replace(".", ",")} />
+            </SimpleGrid>
+          }
+        
       </Center>
     </div>
   )

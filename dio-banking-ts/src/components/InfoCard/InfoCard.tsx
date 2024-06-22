@@ -1,4 +1,5 @@
-import { Box, Icon, Text } from "@chakra-ui/react";
+import { Box, Text, Spinner } from "@chakra-ui/react";
+
 
 interface InfoCardProps {
   title: string;
@@ -6,6 +7,7 @@ interface InfoCardProps {
 }
 
 export const InfoCard = ({ title, value }: InfoCardProps) => {
+
   return (
     <Box
       className="bg-zinc-800 rounded-lg p-4"
@@ -14,8 +16,13 @@ export const InfoCard = ({ title, value }: InfoCardProps) => {
       alignItems="center"
       justifyContent="center"
     >
-      <Text className="text-zinc-100 text-lg font-semibold">{title}</Text>
-      <Text className="text-zinc-100 text-2xl font-semibold">{value}</Text>
+      {value !== undefined || value !== null || title !== undefined || title !== null 
+      ? <>
+          <Text className="text-zinc-100 text-lg font-semibold">{title}</Text>
+          <Text className="text-zinc-100 text-2xl font-semibold">{value}</Text>
+        </> 
+      : <Spinner  />  
+      }
     </Box>
   );
 }
