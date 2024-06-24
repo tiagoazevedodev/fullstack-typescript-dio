@@ -1,9 +1,11 @@
 import { LoginCard } from "../../components/LoginCard/LoginCard"
 import { Center, Input, Box } from "@chakra-ui/react"
 import { SubmitButton } from "../../components/SubmitButton/SubmitButton"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { submitLogin } from "../../services/submitLogin"
 import { api } from "../../api"
+import { useNavigate } from "react-router-dom"
+import { AppContext } from "../../components/AppContext/AppContext"
 
 interface UserData {
   login: string;
@@ -14,7 +16,8 @@ interface UserData {
 }
 
 export const Home = () => {
-
+  const navigate = useNavigate();
+  const { setIsLogged } = useContext(AppContext);
   const [login, setLogin] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [userData, setUserData] = useState<null | UserData>();
@@ -28,6 +31,18 @@ export const Home = () => {
   getData()
   }, []);
 
+  const validateUser = async (login: string, password: string) => {
+    const validLogin = await submitLogin(login, password);
+
+    if (!validLogin) {
+      alert("Login ou senha inválidos");
+      return;           
+    }
+    setIsLogged(true);
+    navigate("/account/7");
+  }
+
+
   return (
     <>
       <LoginCard>
@@ -35,7 +50,6 @@ export const Home = () => {
           <Center>
             <h1 className="text-white text-3xl pb-2">Faça o Login</h1>
           </Center>
-          <p className="text-gray-300 text-2xl">{userData?.name}</p>
           <Input
             className="text-gray-300"
             onChange={(e) => setLogin(e.target.value)}
@@ -48,7 +62,7 @@ export const Home = () => {
             type="password"
           />
           <Center>
-            <SubmitButton onClick={() => submitLogin(login, password)}>Login</SubmitButton>
+            <SubmitButton onClick={() => validateUser(login, password)}>Login</SubmitButton>
           </Center>
         </Box>
       </LoginCard>
