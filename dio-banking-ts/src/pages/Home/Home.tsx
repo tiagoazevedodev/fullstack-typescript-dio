@@ -6,6 +6,9 @@ import { submitLogin } from "../../services/submitLogin"
 import { api } from "../../api"
 import { useNavigate } from "react-router-dom"
 import { AppContext } from "../../components/AppContext/AppContext"
+import { updateLocalStorage } from "../../services/storage"
+
+import { useNotification } from "../../hooks/useNotification" 
 
 interface UserData {
   login: string;
@@ -17,10 +20,13 @@ interface UserData {
 
 export const Home = () => {
   const navigate = useNavigate();
+  const notification = useNotification();
+
   const { setIsLogged } = useContext(AppContext);
   const [login, setLogin] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [userData, setUserData] = useState<null | UserData>();
+
 
   useEffect(() => {
     const getData = async () => {
@@ -38,8 +44,11 @@ export const Home = () => {
       alert("Login ou senha inválidos");
       return;           
     }
-    setIsLogged(true);
-    navigate("/account/7");
+    if (validLogin) {
+      setIsLogged(true);
+      updateLocalStorage({login: true});
+      navigate("/account/7");
+    }
   }
 
 

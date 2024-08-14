@@ -1,13 +1,14 @@
-import { Text } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
+import { AppContext } from '../../components/AppContext/AppContext';
+
 export const AccountInfo = () => {
+  const { isLogged, name, user } = useContext(AppContext);
+
   return (
     <div>
-      <Text fontWeight={"bold"} fontSize={40}>Informações da Conta</Text>
+      <h1 className='text-9xl'>Informações da conta</h1>
       <Link to="/account/7">
-        <Text>
-          Conta
-        </Text>
+        
       </Link>
     </div>
   )

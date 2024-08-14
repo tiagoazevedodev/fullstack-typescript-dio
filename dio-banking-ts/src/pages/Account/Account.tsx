@@ -1,5 +1,5 @@
 import { SimpleGrid, Center, Spinner } from "@chakra-ui/react"
-import { useParams, useNavigate } from "react-router-dom"
+import { useParams, useNavigate, Link } from "react-router-dom"
 import { InfoCard } from "../../components/InfoCard/InfoCard"
 import { useContext, useEffect, useState } from "react"
 import { AppContext } from "../../components/AppContext/AppContext"
